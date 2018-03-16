@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<include src="head.html" />
+</head>
+<body>
+	<h1>${hello}</h1>
+	<ol for="u:users">
+		<li id="${index}" cc_class="{true:odd,false:even}(index%2==0)">${u}</li>
+	</ol>
+	<ol for="u:users" if="users==null">
+		<li><h2>${u}</h2></li>
+	</ol>
+	<ol for="u:users" else_if="users!=null">
+		<li><h2>Hello ${u}</h2></li>
+	</ol>
+	<ol for="u:users" else>
+		<li><h2>Hi ${u}</h2></li>
+	</ol>
+	<include src="footer.html"/>
+</body>
+</html>
