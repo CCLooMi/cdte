@@ -1,11 +1,11 @@
 package com.ccloomi.cdte;
-import static com.ccloomi.cdte.CDTEConfigure.templateLoadPath;
+import static com.ccloomi.cdte.CDTEConfigure.charset;
 import static com.ccloomi.cdte.CDTEConfigure.suffix;
+import static com.ccloomi.cdte.CDTEConfigure.templateLoadPath;
 
-import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -19,8 +19,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.ccloomi.cdte.filewatch.DirWatch;
 import com.ccloomi.cdte.filewatch.FileAction;
 
@@ -106,6 +108,9 @@ public class CDTEngine {
 			e.printStackTrace();
 		}
 	}
+	public CDTEngine compileTemplates() {
+		return this.scanTemplates().pretreatment();
+	}
 	/**
 	 * 描述：snippet的创建修改删除，都有将这些依赖这个snippet的template重新parser
 	 * 作者：chenxj
@@ -150,14 +155,38 @@ public class CDTEngine {
 	private CDTEDocument parserFile(File file,CDTEDocument...docs) {
 		log.debug("Parser template file [{}]", file.getName());
 		try {
-			FileReader fr=new FileReader(file);
-			char[]c=new char[(int)file.length()];
-			fr.read(c);
-			fr.close();
+//			FileReader fr=new FileReader(file);
+//			char[]c=new char[(int)file.length()];
+//			fr.read(c);
+//			fr.close();
+			FileInputStream in=new FileInputStream(file);
+			int bufferSize=60000;
+	        byte[] buffer = new byte[bufferSize];
+	        ByteArrayOutputStream outStream = new ByteArrayOutputStream(bufferSize);
+	        int read;
+	        int remaining = bufferSize;
+	        try{
+	        	while (!Thread.interrupted()) {
+	                read = in.read(buffer);
+	                if (read == -1) break;
+	                if (read > remaining) {
+	                    outStream.write(buffer, 0, remaining);
+	                    break;
+	                }
+	                remaining -= read;
+	                outStream.write(buffer, 0, read);
+	            }
+	        }catch (Exception e) {
+	        	e.printStackTrace();
+			}
+	        byte[]bytes=outStream.toByteArray();
+	        in.close();
+	        String html=new String(bytes,charset);
+	        
 			if(docs.length>0) {
-				docs[0].setoTokens(parser.parser(c));
+				docs[0].setoTokens(parser.parser(html));
 			}else {
-				CDTEDocument doc=new CDTEDocument(parser.parser(c),file.getAbsolutePath());
+				CDTEDocument doc=new CDTEDocument(parser.parser(html),file.getAbsolutePath());
 				cdtedocMap.put(file.getName(),doc);
 				return doc;
 			}
@@ -180,19 +209,30 @@ public class CDTEngine {
 	public boolean checkTemplate(String url) {
 		return templatesMap.containsKey(url);
 	}
+
 	public CDTemplate findTemplate(String url) {
 		return templatesMap.get(url);
 	}
+	
+	public void testInit(String url) {
+		if(!templatesMap.containsKey(url)) {
+			File file=Paths.get(System.getProperty("user.dir"),url).toFile();
+			CDTEDocument doc=parserFile(file);
+			templatesMap.put(url,parser.parser(doc, cdtedocMap));
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
-		CDTEngine eng=new CDTEngine().scanTemplates().pretreatment();
+		CDTEngine eng=new CDTEngine();
+		eng.compileTemplates();
 		CDTemplate tp=eng.findTemplate("test.html");
 		Map<String, Object>model=new HashMap<>();
 		model.put("title", "CDTE TEST!!!");
 		model.put("hello", "Hello CDTE.");
 		model.put("users", Arrays.asList("Seemie","Tommy"));
-		BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream("/Users/chenxianjun/Desktop/test.html"));
-		tp.render(model,bout);
 		tp.render(model, System.out);
-		bout.flush();
+		
+//		eng.testInit("templates/cdte.tpl");
+//		eng.findTemplate("templates/cdte.tpl").render(model, System.out);
 	}
 }

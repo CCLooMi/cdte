@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class Token extends BaseBean implements Constant{
+public class Token implements Constant{
 	private String name;
 	private int type;
 	private boolean selfClose=false;

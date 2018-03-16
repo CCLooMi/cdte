@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greenpineyu.fel.FelEngine;
 import com.greenpineyu.fel.FelEngineImpl;
 import com.greenpineyu.fel.context.FelContext;
@@ -22,21 +21,15 @@ import com.greenpineyu.fel.parser.FelNode;
  * 邮    箱：chenios@foxmail.com
  * 日    期：2018年1月25日-下午7:25:58
  */
-public class Vout extends BaseBean implements Constant{
-	@JsonIgnore
+public class Vout implements Constant{
 	private FelEngine fel=new FelEngineImpl();
 	private VoutType type=VoutType.UNKNOWN;
-	@JsonIgnore
 	private FelNode condition;
 	//else_if or else
 	private Vout nextVout;
-	@JsonIgnore
 	private FelNode valueout;
-
-	@JsonIgnore
 	private FelNode loopout;
 	private String attrName;
-	@JsonIgnore
 	private byte[] data;
 	
 	public String dt;//调试用 TODO
@@ -46,9 +39,7 @@ public class Vout extends BaseBean implements Constant{
 	public String ad;//调试用 TODO
 	
 	private Map<String, byte[]>ccattrmap;
-	@JsonIgnore
 	private FelNode ccattrCondition;
-	
 	private List<Vout>vs;
 
 	public void render(FelContext ctx,OutputStream out)throws Exception{
@@ -61,21 +52,23 @@ public class Vout extends BaseBean implements Constant{
 			break;
 		case FOR:case REPEAT:
 			Object lo=loopout.eval(ctx);
-			int i=0;
-			if(lo instanceof Collection) {
-				for(Object o:(Collection<?>)lo) {
-					ctx.set(attrName, o);
-					ctx.set("index", i++);
-					for(Vout v:vs) {
-						v.render(ctx, out);
+			if(lo!=null) {
+				int i=0;
+				if(lo instanceof Collection) {
+					for(Object o:(Collection<?>)lo) {
+						ctx.set(attrName, o);
+						ctx.set("index", i++);
+						for(Vout v:vs) {
+							v.render(ctx, out);
+						}
 					}
-				}
-			}else if(lo.getClass().isArray()) {
-				for(Object o:(Object[])lo) {
-					ctx.set(attrName, o);
-					ctx.set("index", i++);
-					for(Vout v:vs) {
-						v.render(ctx, out);
+				}else if(lo.getClass().isArray()) {
+					for(Object o:(Object[])lo) {
+						ctx.set(attrName, o);
+						ctx.set("index", i++);
+						for(Vout v:vs) {
+							v.render(ctx, out);
+						}
 					}
 				}
 			}

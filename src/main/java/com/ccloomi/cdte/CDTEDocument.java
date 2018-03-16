@@ -64,6 +64,8 @@ public class CDTEDocument {
 					tokens.add(token);
 				}
 			}
+		}else {
+			this.tokens.addAll(oTokens);
 		}
 		return this.toTree();
 	}
