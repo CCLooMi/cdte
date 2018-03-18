@@ -14,22 +14,23 @@ dependencies {
 		def logbackVersion		= "1.1.9"
 		def slf4jVersion			= "1.7.22"
 		def springBootVersion	= "2.0.0.RELEASE"
+		def tomcatembedVersion	= "9.0.6"
     compile (
 		["org.antlr:antlr4:4.7.1"],
-//		["com.google.guava:guava:21.0"],
-//		["ch.qos.logback:logback-access:$logbackVersion"],
-//		["ch.qos.logback:logback-classic:$logbackVersion"],
-//		["ch.qos.logback:logback-core:$logbackVersion"],
+		["com.google.guava:guava:21.0"],
+		["ch.qos.logback:logback-access:$logbackVersion"],
+		["ch.qos.logback:logback-classic:$logbackVersion"],
+		["ch.qos.logback:logback-core:$logbackVersion"],
 		["org.slf4j:slf4j-api:$slf4jVersion"],
-//		["org.springframework.boot:spring-boot-starter-web:$springBootVersion"],
+		["org.apache.tomcat.embed:tomcat-embed-core:$tomcatembedVersion"],
+		["org.springframework.boot:spring-boot-starter-web:$springBootVersion"],
 //		["org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2"],
-//		["org.springframework:spring-core:$springVersion"],
-//		["org.springframework:spring-web:$springVersion"],
-//		["org.springframework:spring-webmvc:$springVersion"],
-//		["org.xerial.snappy:snappy-java:1.1.2.6"],//snappy High-speed compression
-//		["javax.servlet:javax.servlet-api:3.1.0"],
-//		["javax.servlet.jsp:javax.servlet.jsp-api:2.3.1"],
-    		fileTree(dir: 'libs', include: '*.jar')
-    	     )
-    testCompile group: 'junit', name: 'junit', version: '4.+'
+		["org.springframework:spring-core:$springVersion"],
+		["org.springframework:spring-web:$springVersion"],
+		["org.springframework:spring-webmvc:$springVersion"],
+		["org.xerial.snappy:snappy-java:1.1.2.6"],//snappy High-speed compression
+		["javax.servlet:javax.servlet-api:3.1.0"],
+		["javax.servlet.jsp:javax.servlet.jsp-api:2.3.1"],
+    		fileTree(dir: 'libs', include: '*.jar'))
+    testCompile(["junit:junit:4.+"])
 }

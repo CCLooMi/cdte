@@ -39,7 +39,6 @@ public class CDTEDocument {
 		for(Token token:oTokens) {
 			if(token.isInclude()) {
 				this.refSet.add(token.getAttr("src"));
-				break;
 			}
 		}
 	}
@@ -65,11 +64,14 @@ public class CDTEDocument {
 				}
 			}
 		}else {
-			this.tokens.addAll(oTokens);
+			this.tokens.addAll(getoTokens());
 		}
 		return this.toTree();
 	}
 	private CDTEDocument toTree() {
+		for(Token token:tokens) {
+			token.reset();
+		}
 		Stack<Token> ts=new Stack<>();
 		for(Token token:tokens){
 			if(token.getType()<0){

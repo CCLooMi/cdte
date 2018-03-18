@@ -120,7 +120,7 @@ public class CDTEngine {
 	private void reParserRelySnippet(String snippetName) {
 		for(Entry<String, CDTEDocument>entry:cdtedocMap.entrySet()) {
 			if(entry.getValue().relySnippet(snippetName)) {
-				templatesMap.put(snippetName, parser.parser(entry.getValue(), cdtedocMap));
+				templatesMap.put(entry.getKey(), parser.parser(entry.getValue(), cdtedocMap));
 			}
 		}
 	}

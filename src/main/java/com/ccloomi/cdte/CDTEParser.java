@@ -249,7 +249,7 @@ public class CDTEParser implements Constant{
 								t.setData(sb.toString());
 								
 								if(!sk.isEmpty()){
-									sk.peek().addChild(t);
+									sk.peek().addChild(t,true);
 								}
 							}
 							sb.delete(0, sb.length());

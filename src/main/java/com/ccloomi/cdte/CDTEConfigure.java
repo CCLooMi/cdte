@@ -13,6 +13,7 @@ public class CDTEConfigure {
 	public static Charset charset;
 	public static String[] templateLoadPath;
 	public static String suffix;
+	public static String prefix;
 	static {
 		charset=Charset.forName("UTF-8");
 		templateLoadPath="templates".split(",|;");

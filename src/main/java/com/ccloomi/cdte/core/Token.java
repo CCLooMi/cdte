@@ -16,6 +16,12 @@ public class Token implements Constant{
 	private Map<String, String>commands=new HashMap<>();
 	private List<Token>childs=new LinkedList<>();
 	
+	//backup for reset
+	private List<Token>childsBak=new LinkedList<>();
+	private Map<String, String>commandsBak=new HashMap<>();
+	//backup flag
+	private boolean isBak;
+	
 	private boolean isInclude=false;
 	public String getName() {
 		return name;
@@ -64,7 +70,12 @@ public class Token implements Constant{
 	public void setChilds(List<Token> childs) {
 		this.childs = childs;
 	}
-	
+	public boolean isBak() {
+		return isBak;
+	}
+	public void setBak(boolean isBak) {
+		this.isBak = isBak;
+	}
 	public boolean isInclude() {
 		return isInclude;
 	}
@@ -97,8 +108,25 @@ public class Token implements Constant{
 		}
 		return this;
 	}
-	public Token addChild(Token Token){
-		this.childs.add(Token);
+	public Token reset() {
+		//Token在后面处理中childs会改变和commands会被删除
+		this.childs.clear();
+		this.commands.putAll(commandsBak);
+		if(isBak) {
+			this.childs.addAll(childsBak);
+		}
+		return this;
+	}
+	public Token addChild(Token token,boolean isBak){
+		this.childs.add(token);
+		if(isBak) {
+			this.isBak=isBak;
+			this.childsBak.add(token);
+		}
+		return this;
+	}
+	public Token addChild(Token token){
+		this.childs.add(token);
 		return this;
 	}
 	public Token addChilds(Collection<Token>Tokens){
@@ -121,7 +149,10 @@ public class Token implements Constant{
 		return this.commands.get(command);
 	}
 	public void removeCommand(String command) {
-		this.commands.remove(command);
+		if(hasCommand(command)) {
+			this.commandsBak.put(command, commands.get(command));
+			this.commands.remove(command);
+		}
 	}
 	public String getAttr(String attr) {
 		return attrs.get(attr);

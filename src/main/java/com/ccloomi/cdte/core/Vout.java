@@ -48,7 +48,7 @@ public class Vout implements Constant{
 			out.write(data);
 			break;
 		case VALUE:
-			out.write(String.valueOf(valueout.eval(ctx)).getBytes());
+			out.write(String.valueOf(valueout.eval(ctx)).getBytes(charset));
 			break;
 		case FOR:case REPEAT:
 			Object lo=loopout.eval(ctx);
