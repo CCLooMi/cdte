@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greenpineyu.fel.FelEngine;
 import com.greenpineyu.fel.FelEngineImpl;
 import com.greenpineyu.fel.context.FelContext;
@@ -21,15 +22,20 @@ import com.greenpineyu.fel.parser.FelNode;
  * 邮    箱：chenios@foxmail.com
  * 日    期：2018年1月25日-下午7:25:58
  */
-public class Vout implements Constant{
+public class Vout extends BaseBean implements Constant{
+	@JsonIgnore
 	private FelEngine fel=new FelEngineImpl();
 	private VoutType type=VoutType.UNKNOWN;
+	@JsonIgnore
 	private FelNode condition;
 	//else_if or else
 	private Vout nextVout;
+	@JsonIgnore
 	private FelNode valueout;
+	@JsonIgnore
 	private FelNode loopout;
 	private String attrName;
+	@JsonIgnore
 	private byte[] data;
 	
 	public String dt;//调试用 TODO
@@ -39,6 +45,7 @@ public class Vout implements Constant{
 	public String ad;//调试用 TODO
 	
 	private Map<String, byte[]>ccattrmap;
+	@JsonIgnore
 	private FelNode ccattrCondition;
 	private List<Vout>vs;
 

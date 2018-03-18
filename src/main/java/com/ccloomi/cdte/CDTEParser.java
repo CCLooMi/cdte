@@ -53,11 +53,19 @@ public class CDTEParser implements Constant{
 			}else if(token.hasCommands()) {
 				Vout vo=new Vout();
 				if(token.hasCommand(_if_)) {
+					if(sb.length()>0) {
+						ls.add(new Vout().addType(VoutType.TEXT, sb.toString()));
+						sb.delete(0, sb.length());
+					}
 					vo.addType(VoutType.IF, token.getCommand(_if_));
 					token.removeCommand(_if_);
 					vo.setVs(tokensToVoutList(token));
 					ls.add(vo);
 				}else if(token.hasCommand(_else_if_)) {
+					if(sb.length()>0) {
+						ls.add(new Vout().addType(VoutType.TEXT, sb.toString()));
+						sb.delete(0, sb.length());
+					}
 					if(ls.size()>0
 							&&(ls.get(ls.size()-1).getType()==VoutType.IF
 							||ls.get(ls.size()-1).getType()==VoutType.ELSE_IF)) {
@@ -67,6 +75,10 @@ public class CDTEParser implements Constant{
 						ls.get(ls.size()-1).setNextVout(vo);
 					}
 				}else if(token.hasCommand(_else_)) {
+					if(sb.length()>0) {
+						ls.add(new Vout().addType(VoutType.TEXT, sb.toString()));
+						sb.delete(0, sb.length());
+					}
 					if(ls.size()>0
 							&&(ls.get(ls.size()-1).getType()==VoutType.IF
 							||ls.get(ls.size()-1).getType()==VoutType.ELSE_IF)) {
@@ -76,6 +88,10 @@ public class CDTEParser implements Constant{
 						ls.get(ls.size()-1).setNextVout(vo);
 					}
 				}else if(token.hasCommand(_repeat_)) {
+					if(sb.length()>0) {
+						ls.add(new Vout().addType(VoutType.TEXT, sb.toString()));
+						sb.delete(0, sb.length());
+					}
 					vo.addType(VoutType.REPEAT, token.getCommand(_repeat_));
 					token.removeCommand(_repeat_);
 					vo.setVs(tokensToVoutList(token));

@@ -22,6 +22,8 @@ public class CDTemplate {
 	}
 
 	public void render(FelContext ctx, OutputStream out) {
+		//TODO
+		System.out.println(voutList);
 		try {
 			for (Vout v : voutList) {
 				v.render(ctx, out);
