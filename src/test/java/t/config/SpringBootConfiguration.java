@@ -15,7 +15,5 @@ import com.ccloomi.cdte.spring.springboot.CDTEAutoConfiguration;
 @Configuration
 @Import({CDTEAutoConfiguration.class})
 public class SpringBootConfiguration {
-	public SpringBootConfiguration() {
-		System.out.println(getClass());
-	}
+	
 }
