@@ -1,7 +1,10 @@
 group "ccloomi.com"
-version '1.0'
+version '1.0.1'
+def artifactId='cdte'
+
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'maven'
+
 allprojects {
 	repositories {
 		maven{url='http://localhost:8081/repository/alimaven-central/'}
@@ -12,7 +15,7 @@ dependencies {
         def springVersion		= "4.3.6.RELEASE"
         def jacksonVersion		= "2.8.6"
 		def logbackVersion		= "1.1.9"
-		def slf4jVersion			= "1.7.22"
+		def slf4jVersion		= "1.7.22"
 		def springBootVersion	= "2.0.0.RELEASE"
 		def tomcatembedVersion	= "9.0.6"
     compile (
@@ -24,7 +27,6 @@ dependencies {
 		["org.slf4j:slf4j-api:$slf4jVersion"],
 		["org.apache.tomcat.embed:tomcat-embed-core:$tomcatembedVersion"],
 		["org.springframework.boot:spring-boot-starter-web:$springBootVersion"],
-//		["org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2"],
 		["org.springframework:spring-core:$springVersion"],
 		["org.springframework:spring-web:$springVersion"],
 		["org.springframework:spring-webmvc:$springVersion"],
@@ -33,4 +35,26 @@ dependencies {
 		["javax.servlet.jsp:javax.servlet.jsp-api:2.3.1"],
     		fileTree(dir: 'libs', include: '*.jar'))
     testCompile(["junit:junit:4.+"])
+}
+
+//打包源代码
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+artifacts {
+    archives sourcesJar
+}
+//上传到nexus,在终端中gradle uploadArchives即可
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://localhost:8081/repository/maven-releases/") {
+                authentication(userName: "admin", password: "admin123")
+            }
+            pom.version = "$project.version"
+            pom.artifactId = "$artifactId"
+            pom.groupId = "$project.group"
+        }
+    }
 }
