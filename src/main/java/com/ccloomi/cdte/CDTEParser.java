@@ -171,6 +171,10 @@ public class CDTEParser implements Constant{
 						.append(token.getName())
 						.append('>');
 					}
+				}else {
+					if(token.hasChilds()) {
+						tokensToVoutList(sb,ls,token.getChilds());
+					}
 				}
 			}
 		}
@@ -258,7 +262,6 @@ public class CDTEParser implements Constant{
 				if(!stringFlag){
 					if(c=='<'){
 						if(sb.length()!=0){
-							
 							if(srcFlag||!emptyStr(sb)){
 								Token t=new Token();
 								t.setType(0);//"TEXT";

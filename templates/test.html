@@ -4,6 +4,11 @@
 <include src="head.html" />
 </head>
 <body>
+	<igroup>
+		<label><input type="radio" value="title" name="1" checked>名称</label>
+		<label><input type="radio" value="artistName" name="1">艺术家</label>
+		<label><input type="radio" value="year" name="1">年份</label>
+	</igroup>    
 	<h1>${hello}</h1>
 	<ol for="u:users">
 		<li id="${index}" cc_class="{true:odd,false:even}(index%2==0)">${u}</li>
@@ -19,4 +24,7 @@
 	</ol>
 	<include src="footer.html"/>
 </body>
+<script>
+alert("EHLHLHLHLH");
+</script>
 </html>
