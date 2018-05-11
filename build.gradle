@@ -12,12 +12,10 @@ allprojects {
 	}
 }
 dependencies {
-        def springVersion		= "4.3.6.RELEASE"
         def jacksonVersion		= "2.8.6"
 		def logbackVersion		= "1.1.9"
 		def slf4jVersion		= "1.7.22"
 		def springBootVersion	= "2.0.0.RELEASE"
-		def tomcatembedVersion	= "9.0.6"
     compile (
 		["org.antlr:antlr4:4.7.1"],
 		["com.google.guava:guava:21.0"],
@@ -25,12 +23,8 @@ dependencies {
 		["ch.qos.logback:logback-classic:$logbackVersion"],
 		["ch.qos.logback:logback-core:$logbackVersion"],
 		["org.slf4j:slf4j-api:$slf4jVersion"],
-		["org.apache.tomcat.embed:tomcat-embed-core:$tomcatembedVersion"],
 		["org.springframework.boot:spring-boot-starter-web:$springBootVersion"],
-		["org.springframework:spring-core:$springVersion"],
-		["org.springframework:spring-web:$springVersion"],
-		["org.springframework:spring-webmvc:$springVersion"],
-		["org.xerial.snappy:snappy-java:1.1.2.6"],//snappy High-speed compression
+		["org.xerial.snappy:snappy-java:1.1.2.6"],
 		["javax.servlet:javax.servlet-api:3.1.0"],
 		["javax.servlet.jsp:javax.servlet.jsp-api:2.3.1"],
     		fileTree(dir: 'libs', include: '*.jar'))
