@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
-  <info organisation="ccloomi.com" module="cdte" revision="1.0.1" status="integration" default="true" publication="20180415195844"/>
+  <info organisation="ccloomi.com" module="cdte" revision="1.5.12" status="integration" default="true" publication="20180511183911"/>
   <configurations>
     <conf name="apiElements" visibility="private" extends="compile,runtime"/>
     <conf name="archives" visibility="public"/>
@@ -32,10 +32,7 @@
     <dependency org="ch.qos.logback" name="logback-classic" rev="1.1.9" conf="compile-&gt;default"/>
     <dependency org="ch.qos.logback" name="logback-core" rev="1.1.9" conf="compile-&gt;default"/>
     <dependency org="org.slf4j" name="slf4j-api" rev="1.7.22" conf="compile-&gt;default"/>
-    <dependency org="org.springframework.boot" name="spring-boot-starter-web" rev="2.0.0.RELEASE" conf="compile-&gt;default"/>
-    <dependency org="org.springframework" name="spring-core" rev="4.3.6.RELEASE" conf="compile-&gt;default"/>
-    <dependency org="org.springframework" name="spring-web" rev="4.3.6.RELEASE" conf="compile-&gt;default"/>
-    <dependency org="org.springframework" name="spring-webmvc" rev="4.3.6.RELEASE" conf="compile-&gt;default"/>
+    <dependency org="org.springframework.boot" name="spring-boot-starter-web" rev="1.5.12.RELEASE" conf="compile-&gt;default"/>
     <dependency org="org.xerial.snappy" name="snappy-java" rev="1.1.2.6" conf="compile-&gt;default"/>
     <dependency org="javax.servlet" name="javax.servlet-api" rev="3.1.0" conf="compile-&gt;default"/>
     <dependency org="javax.servlet.jsp" name="javax.servlet.jsp-api" rev="2.3.1" conf="compile-&gt;default"/>
