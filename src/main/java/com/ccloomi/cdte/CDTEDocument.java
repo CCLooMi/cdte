@@ -77,7 +77,7 @@ public class CDTEDocument {
 			if(token.getType()<0){
 				Stack<Token>temps=new Stack<>();
 				Token t=ts.pop();
-				while(!t.getName().equals(token.getName())){
+				while(!token.getName().equals(t.getName())){
 					temps.add(t);
 					t=ts.pop();
 				}
