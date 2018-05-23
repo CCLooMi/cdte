@@ -266,10 +266,7 @@ public class CDTEParser implements Constant{
 								Token t=new Token();
 								t.setType(0);//"TEXT";
 								t.setData(sb.toString());
-								
-								if(!sk.isEmpty()){
-									sk.peek().addChild(t,true);
-								}
+								sk.push(t);
 							}
 							sb.delete(0, sb.length());
 							sb.append(c);
