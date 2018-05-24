@@ -317,6 +317,12 @@ public class CDTEParser implements Constant{
 				commFlag=false;
 			}
 		}
+		if(sb.length()!=0&&!emptyStr(sb)){
+			Token t=new Token();
+			t.setType(0);//"TEXT";
+			t.setData(sb.toString());
+			sk.push(t);
+		}
 		return sk;
 	}
 	private Token stringToToken(String Token){
