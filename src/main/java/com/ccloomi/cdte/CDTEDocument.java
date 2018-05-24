@@ -73,7 +73,12 @@ public class CDTEDocument {
 			token.reset();
 		}
 		Stack<Token> ts=new Stack<>();
+		Token refToken=null;
 		for(Token token:tokens){
+			if(refToken!=null&&refToken.getType()>0&&token.getType()==0) {
+				refToken.addChild(token);
+				continue;
+			}
 			if(token.getType()<0){
 				Stack<Token>temps=new Stack<>();
 				Token t=ts.pop();
@@ -88,6 +93,7 @@ public class CDTEDocument {
 			}else if(token.getType()!=3){
 				ts.push(token);
 			}
+			refToken=token;
 		}
 		tokens.clear();
 		tokens=ts;
