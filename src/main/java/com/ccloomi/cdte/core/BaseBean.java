@@ -18,7 +18,7 @@ public abstract class BaseBean {
 			return om.writeValueAsString(this);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
-			return null;
+			return "{error:'toStringError'}";
 		}
 	}
 }
