@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ccloomi.cdte.filewatch.DirWatch;
 import com.ccloomi.cdte.filewatch.FileAction;
+import com.ccloomi.cdte.utils.Paths;
 
 /**© 2015-2018 Chenxj Copyright
  * 类    名：CDTEngine
@@ -128,7 +128,9 @@ public class CDTEngine {
 		int pathsl=templateLoadPath.length;
 		try{
 			for(int i=0;i<pathsl;i++){
-				Path p=templateLoadPath[i].charAt(0)=='/'?Paths.get(templateLoadPath[i]):Paths.get(System.getProperty("user.dir"), templateLoadPath[i]);
+				Path p=templateLoadPath[i].charAt(0)=='/'?
+						Paths.getFile("", templateLoadPath[i]).toPath():
+							Paths.getUserDirFile(templateLoadPath[i]).toPath();
 				Files.walkFileTree(p, new SimpleFileVisitor<Path>() {
 					@Override
 					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
@@ -216,7 +218,7 @@ public class CDTEngine {
 	
 	public void testInit(String url) {
 		if(!templatesMap.containsKey(url)) {
-			File file=Paths.get(System.getProperty("user.dir"),url).toFile();
+			File file=Paths.getUserDirFile(url);
 			CDTEDocument doc=parserFile(file);
 			templatesMap.put(url,parser.parser(doc, cdtedocMap));
 		}

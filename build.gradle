@@ -7,8 +7,7 @@ apply plugin: 'maven'
 
 allprojects {
 	repositories {
-		maven{url='http://localhost:8081/repository/alimaven-central/'}
-		maven{url="http://localhost:8081/repository/maven-releases/"}
+		maven{url='http://10.9.9.116:8081/nexus/content/repositories/central/'}
 	}
 }
 dependencies {
